@@ -1,0 +1,15 @@
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\bin\Debug\net10.0\Api.Common.deps.json
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\bin\Debug\net10.0\Api.Common.dll
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\bin\Debug\net10.0\Api.Common.pdb
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\bin\Debug\net10.0\Api.Common.Data.dll
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\bin\Debug\net10.0\Api.Common.Data.pdb
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.csproj.AssemblyReference.cache
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.AssemblyInfoInputs.cache
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.AssemblyInfo.cs
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.csproj.CoreCompileInputs.cache
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.csproj.Up2Date
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.dll
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\refint\Api.Common.dll
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\Api.Common.pdb
+C:\Users\vladg\source\repos\Auction\Shared\Api.Common\obj\Debug\net10.0\ref\Api.Common.dll

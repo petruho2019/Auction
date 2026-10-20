@@ -1,0 +1,17 @@
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\bin\Debug\net10.0\DataAccess.deps.json
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\bin\Debug\net10.0\DataAccess.dll
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\bin\Debug\net10.0\DataAccess.pdb
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.csproj.AssemblyReference.cache
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.AssemblyInfoInputs.cache
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.AssemblyInfo.cs
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.dll
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\refint\DataAccess.dll
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.pdb
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\ref\DataAccess.dll
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\bin\Debug\net10.0\DataAccess.runtimeconfig.json
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.genruntimeconfig.cache
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\bin\Debug\net10.0\Data.dll
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\bin\Debug\net10.0\Data.pdb
+C:\Users\vladg\source\repos\Auction\Identity\DataAccess\obj\Debug\net10.0\DataAccess.csproj.Up2Date

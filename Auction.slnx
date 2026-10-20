@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Identity/">
+    <Project Path="Identity/Api/Api.csproj" />
+    <Project Path="Identity/Application/Application.csproj" />
+    <Project Path="Identity/Data/Data.csproj" />
+    <Project Path="Identity/DataAccess/DataAccess.csproj" />
+  </Folder>
+  <Folder Name="/Shared/">
+    <Project Path="Shared/Api.Common.Data/Api.Common.Data.csproj" />
+    <Project Path="Shared/Api.Common.Generator/Api.Common.Generator.csproj" />
+    <Project Path="Shared/Api.Common/Api.Common.csproj" />
+  </Folder>
+  <Project Path="Auction/Api/AuctionApi.csproj" />
+</Solution>
