@@ -45,10 +45,22 @@ namespace DataAccess.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Email"), "BTREE");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Username"), "BTREE");
 
                     b.ToTable("Users");
                 });
@@ -86,10 +98,16 @@ namespace DataAccess.Migrations
                     b.HasIndex("AccessTokenHash")
                         .IsUnique();
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("AccessTokenHash"), "BTREE");
+
                     b.HasIndex("RefreshTokenHash")
                         .IsUnique();
 
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("RefreshTokenHash"), "BTREE");
+
                     b.HasIndex("UserId");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("UserId"), "BTREE");
 
                     b.ToTable("UserSessions");
                 });

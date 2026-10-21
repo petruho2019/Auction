@@ -1,4 +1,6 @@
-namespace Identity.Data.Dtos;
+using Identity.Data.Dtos;
+
+namespace Data.Dtos;
 
 public sealed record LoginResultDto(
     UserDto User,

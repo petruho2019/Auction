@@ -1,3 +1,4 @@
+using Data.Dtos;
 using Identity.Data.Dtos;
 
 namespace Identity.Application.Interfaces;

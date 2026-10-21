@@ -1,0 +1,67 @@
+# syntax=docker/dockerfile-upstream:master-labs
+ARG DOTNET_VERBOSITY=minimal
+ARG DOTNET_BUILD_CONFIGURATION=Development
+# ARG NPM_VERBOSITY=warn
+# ARG NPM_BUILD_CONFIGURATION=prod
+ARG SERVICE_PATH=Identity
+ARG URL_APP=identity
+ARG CLIENT_PROJECT_PATH=Client
+ARG BUILD_PROJECT_NAME=Api.csproj
+ARG BUILD_PROJECT_PATH=Api
+
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS base
+
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS dotnet-restore
+ARG DOTNET_VERBOSITY
+ARG SERVICE_PATH
+ARG BUILD_PROJECT_PATH
+ARG BUILD_PROJECT_NAME
+WORKDIR /src
+COPY --parents **/*.csproj **/*.props **/NuGet.config *.sln* ./
+RUN --mount=type=cache,target=/root/.nuget/packages,id=nuget,sharing=locked \
+    --mount=type=cache,target=/app/build,id=dotnet-build-identity,sharing=locked \
+    dotnet restore "${SERVICE_PATH}/${BUILD_PROJECT_PATH}/${BUILD_PROJECT_NAME}" \
+    --artifacts-path /app/build \
+    --verbosity ${DOTNET_VERBOSITY}
+
+FROM dotnet-restore AS dotnet-build
+ARG DOTNET_VERBOSITY
+ARG DOTNET_BUILD_CONFIGURATION
+ARG SERVICE_PATH
+ARG BUILD_PROJECT_PATH
+ARG BUILD_PROJECT_NAME
+WORKDIR /src
+COPY Shared Shared
+COPY ${SERVICE_PATH} ${SERVICE_PATH}
+RUN --mount=type=cache,target=/root/.nuget/packages,id=nuget,sharing=locked \
+    --mount=type=cache,target=/app/build,id=dotnet-build-identity,sharing=locked \
+    dotnet build "${SERVICE_PATH}/${BUILD_PROJECT_PATH}/${BUILD_PROJECT_NAME}" \
+    --configuration ${DOTNET_BUILD_CONFIGURATION} \
+    --no-restore \
+    --artifacts-path /app/build \
+    --verbosity ${DOTNET_VERBOSITY}
+
+FROM dotnet-build AS publish
+ARG DOTNET_VERBOSITY
+ARG DOTNET_BUILD_CONFIGURATION
+ARG SERVICE_PATH
+ARG BUILD_PROJECT_PATH
+ARG BUILD_PROJECT_NAME
+RUN --mount=type=cache,target=/root/.nuget/packages,id=nuget,sharing=locked \
+    --mount=type=cache,target=/app/build,id=dotnet-build-identity,sharing=locked \
+    dotnet publish "${SERVICE_PATH}/${BUILD_PROJECT_PATH}/${BUILD_PROJECT_NAME}" \
+    --configuration ${DOTNET_BUILD_CONFIGURATION} \
+    --output /app/publish \
+    --artifacts-path /app/build \
+    --verbosity ${DOTNET_VERBOSITY} \
+    --no-build \
+    --no-restore
+
+FROM base
+ARG BUILD_PROJECT_NAME
+ENV BUILD_PROJECT_NAME=${BUILD_PROJECT_NAME}
+EXPOSE 80
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENV RUN_DLL="${BUILD_PROJECT_NAME%.csproj}.dll"
+ENTRYPOINT ["sh", "-c", "exec dotnet \"${RUN_DLL}\""]

@@ -1,3 +1,4 @@
+using Data.Dtos;
 using Identity.Application.Interfaces;
 using Identity.Data;
 using Identity.Data.Dtos;
@@ -18,10 +19,13 @@ public sealed class AuthenticationService(
         CancellationToken cancellationToken)
     {
         var email = request.Email.Trim().ToLowerInvariant();
-        if (await dbContext.Users.AnyAsync(user => user.Email == email, cancellationToken))
+        var username = request.Username.Trim().ToLowerInvariant();
+        if (await dbContext.Users.AnyAsync(
+            user => user.Email == email || user.Username == username,
+            cancellationToken))
             return null;
 
-        var user = new User { Email = email };
+        var user = new User { Email = email, Username = username };
         user.PasswordHash = passwordHasher.HashPassword(user, request.Password);
         dbContext.Users.Add(user);
 
@@ -144,5 +148,6 @@ public sealed class AuthenticationService(
             await dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    private static UserDto ToDto(User user) => new(user.Id, user.Email, user.Role);
+    private static UserDto ToDto(User user) =>
+        new(user.Id, user.Username, user.Email);
 }
