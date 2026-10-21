@@ -33,14 +33,13 @@ public sealed class AccessRefreshAuthenticationHandler(
         return Success(result.User);
     }
 
-    private AuthenticateResult Success(Identity.Data.Dtos.UserDto user)
+    private AuthenticateResult Success(Data.Dtos.UserDto user)
     {
         var claims = new[]
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Email),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role)
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()!),
+            new Claim(ClaimTypes.Name, user.Username!),
+            new Claim(ClaimTypes.Email, user.Email!)
         };
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var principal = new ClaimsPrincipal(identity);
