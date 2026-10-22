@@ -57,11 +57,27 @@ RUN --mount=type=cache,target=/root/.nuget/packages,id=nuget,sharing=locked \
     --no-build \
     --no-restore
 
+FROM ghcr.io/pnpm/pnpm:12 AS pnpm
+RUN pnpm runtime set node 26 -g
+
+FROM pnpm AS angular-build
+ARG CLIENT_PROJECT_PATH
+ARG URL_APP
+ARG SERVICE_PATH
+WORKDIR /src/${SERVICE_PATH}/${CLIENT_PROJECT_PATH} 
+COPY ${SERVICE_PATH}/${CLIENT_PROJECT_PATH} .
+ENV CI=true
+# RUN pnpm approve-builds
+RUN pnpm install --frozen-lockfile
+RUN --mount=type=cache,target=/src/${SERVICE_PATH}/${CLIENT_PROJECT_PATH}/.angular/cache,id=angular-build-identity,sharing=locked \
+    pnpm run build --output-path=/dist/wwwroot/${URL_APP}/static/angular
+
 FROM base
 ARG BUILD_PROJECT_NAME
 ENV BUILD_PROJECT_NAME=${BUILD_PROJECT_NAME}
 EXPOSE 80
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=angular-build /dist/wwwroot ./wwwroot
 ENV RUN_DLL="${BUILD_PROJECT_NAME%.csproj}.dll"
 ENTRYPOINT ["sh", "-c", "exec dotnet \"${RUN_DLL}\""]
