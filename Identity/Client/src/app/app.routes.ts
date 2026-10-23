@@ -6,7 +6,7 @@ export const routes: Routes = [
   {
     path: 'identity',
     children: [
-      { path: '', component: UserProfile },
+      { path: 'profile', component: UserProfile },
       { path: 'login', component: Login },
     ],
   },

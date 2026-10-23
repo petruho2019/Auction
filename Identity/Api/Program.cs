@@ -6,12 +6,13 @@ using Identity.Api.Auth;
 using Identity.DataAccess;
 using Microsoft.AspNetCore.Authentication;
 using Identity.Data.Entities;
+using DataAccess.Common;
 
 namespace Identity.Api;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -55,6 +56,11 @@ public class Program
 
         app.UseHealthChecks("/api/v1/identity/health"); // TODO посмотреть есть ли в nginx возможности из location / перенести запрос на location /api/v1/identity при health
 
+        using (var scope = app.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            await DBInitializer.InitializeDatabase(context);
+        }
         app.Run();
     }
 

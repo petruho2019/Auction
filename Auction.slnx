@@ -10,5 +10,8 @@
     <Project Path="Shared/Api.Common.Generator/Api.Common.Generator.csproj" />
     <Project Path="Shared/Api.Common/Api.Common.csproj" />
   </Folder>
+  <Folder Name="/Shared/DataAccess.Common/">
+    <Project Path="shared/DataAccess.Common/DataAccess.Common.csproj" />
+  </Folder>
   <Project Path="Auction/Api/AuctionApi.csproj" />
 </Solution>

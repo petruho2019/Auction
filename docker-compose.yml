@@ -24,6 +24,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          ignore: 
+            - ./Auction
     restart: "no"
 
   postgres: 
@@ -64,6 +70,12 @@ services:
         condition: service_healthy
     networks:
       - auction
+    develop:
+      watch:
+        - action: rebuild
+          path: .
+          ignore: 
+            - ./Auction
 
 volumes: 
   pgdata:

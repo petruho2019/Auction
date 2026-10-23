@@ -3,9 +3,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\..\Shared\Api.Common\Api.Common.csproj" />
-    <ProjectReference Include="..\..\Shared\Api.Common.Data\Api.Common.Data.csproj" />
-    <ProjectReference Include="..\..\Shared\Api.Common.Generator\Api.Common.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\shared\Api.Common\Api.Common.csproj" />
+    <ProjectReference Include="..\..\shared\Api.Common.Data\Api.Common.Data.csproj" />
+    <ProjectReference Include="..\..\shared\Api.Common.Generator\Api.Common.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\shared\DataAccess.Common\DataAccess.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

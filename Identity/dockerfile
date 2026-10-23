@@ -3,7 +3,7 @@ ARG DOTNET_VERBOSITY=minimal
 ARG DOTNET_BUILD_CONFIGURATION=Development
 # ARG NPM_VERBOSITY=warn
 # ARG NPM_BUILD_CONFIGURATION=prod
-ARG SERVICE_PATH=Identity
+ARG SERVICE_PATH=identity
 ARG URL_APP=identity
 ARG CLIENT_PROJECT_PATH=Client
 ARG BUILD_PROJECT_NAME=Api.csproj
@@ -31,7 +31,7 @@ ARG SERVICE_PATH
 ARG BUILD_PROJECT_PATH
 ARG BUILD_PROJECT_NAME
 WORKDIR /src
-COPY Shared Shared
+COPY shared shared
 COPY ${SERVICE_PATH} ${SERVICE_PATH}
 RUN --mount=type=cache,target=/root/.nuget/packages,id=nuget,sharing=locked \
     --mount=type=cache,target=/app/build,id=dotnet-build-identity,sharing=locked \
@@ -69,8 +69,9 @@ COPY ${SERVICE_PATH}/${CLIENT_PROJECT_PATH} .
 ENV CI=true
 # RUN pnpm approve-builds
 RUN pnpm install --frozen-lockfile
-RUN --mount=type=cache,target=/src/${SERVICE_PATH}/${CLIENT_PROJECT_PATH}/.angular/cache,id=angular-build-identity,sharing=locked \
-    pnpm run build --output-path=/dist/wwwroot/${URL_APP}/static/angular
+RUN pnpm run build --base-href=/${URL_APP}/ --output-path=/dist/wwwroot/${URL_APP}/angular 
+#--mount=type=cache,target=/src/${SERVICE_PATH}/${CLIENT_PROJECT_PATH}/.angular/cache,id=angular-build-identity,sharing=locked \
+
 
 FROM base
 ARG BUILD_PROJECT_NAME
