@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import { clearAuthStatus, login, register } from '../../../store/actions/user.actions';
-import { selectAuthError, selectAuthStatus } from '../../../store/reducer/user.reducer';
+import { selectAuthError, selectAuthStatus } from '../../../store/selectors/user.selector';
 
 @Component({
   imports: [AsyncPipe, ReactiveFormsModule],

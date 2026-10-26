@@ -7,6 +7,8 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { userFeatureKey, userReducer } from '../store/reducer/user.reducer';
 import { UserEffects } from '../store/effects/user.effects';
+import { provideServerRendering, withRoutes } from '@angular/ssr';
+import { serverRoutes } from './app.routes.server';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,5 +20,6 @@ export const appConfig: ApplicationConfig = {
       [userFeatureKey]: userReducer,
     }),
     provideEffects([UserEffects]),
+    provideServerRendering(withRoutes(serverRoutes)),
   ],
 };

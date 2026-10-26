@@ -1,4 +1,3 @@
-import { createReducer, on } from '@ngrx/store';
 import { usersAdapter } from '../adapters';
 import { UserState } from '../states';
 import {
@@ -11,6 +10,7 @@ import {
   registerFailure,
   registerSuccess,
 } from '../actions/user.actions';
+import { createReducer, on } from '@ngrx/store';
 
 export const userFeatureKey = 'User';
 
@@ -22,15 +22,17 @@ export const initialState: UserState = usersAdapter.getInitialState({
 export const userReducer = createReducer(
   initialState,
   on(loadCurrentUserSuccess, (state, { user }) =>
-    user.id ? usersAdapter.upsertOne(user, state) : state,
+    usersAdapter.upsertOne(user, {
+      ...state,
+      authStatus: user.isAuthenticated ? 'authenticated' : 'unauthenticated',
+      authError: null,
+    }),
   ),
   on(login, register, (state) => ({ ...state, authStatus: 'loading', authError: null })),
   on(loginSuccess, (state, { user }) =>
-    user.id
-      ? usersAdapter.upsertOne(user, { ...state, authStatus: 'success', authError: null })
-      : { ...state, authStatus: 'success', authError: null },
+    usersAdapter.upsertOne(user, { ...state, authStatus: 'authenticated', authError: null }),
   ),
-  on(registerSuccess, (state) => ({ ...state, authStatus: 'success', authError: null })),
+  on(registerSuccess, (state) => ({ ...state, authStatus: 'authenticated', authError: null })),
   on(loginFailure, registerFailure, (state, { error }) => ({
     ...state,
     authStatus: 'error',
@@ -38,6 +40,3 @@ export const userReducer = createReducer(
   })),
   on(clearAuthStatus, (state) => ({ ...state, authStatus: 'idle', authError: null })),
 );
-
-export const selectAuthStatus = (state: { User: UserState }) => state.User.authStatus;
-export const selectAuthError = (state: { User: UserState }) => state.User.authError;

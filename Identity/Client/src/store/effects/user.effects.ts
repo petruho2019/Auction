@@ -24,7 +24,9 @@ export class UserEffects {
       ofType(loadCurrentUser),
       switchMap(() =>
         this.authService.getCurrentUser().pipe(
-          map((user) => loadCurrentUserSuccess({ user })),
+          map((user) => {
+            return loadCurrentUserSuccess({ user });
+          }),
           catchError((error: unknown) =>
             of(loadCurrentUserFailure({ error: getAuthError(error) })),
           ),
@@ -62,9 +64,7 @@ export class UserEffects {
       exhaustMap(({ email, username, password }) =>
         this.authService.register(email, username, password).pipe(
           map(() => registerSuccess()),
-          catchError((error: unknown) =>
-            of(registerFailure({ error: getAuthError(error) })),
-          ),
+          catchError((error: unknown) => of(registerFailure({ error: getAuthError(error) }))),
         ),
       ),
     ),

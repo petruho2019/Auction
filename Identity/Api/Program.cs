@@ -39,8 +39,20 @@ public class Program
         services.AddAuthorization();
         services.AddHealthChecks();
 
+        services.AddCors(opts =>
+        {
+            opts.AddPolicy("AllowAllDevFront", policy =>
+            {
+                policy.WithOrigins("http://localhost:4200")
+                 .AllowAnyHeader()
+                 .AllowAnyMethod()
+                 .AllowCredentials();
+            });
+        });
+
         var app = builder.Build();
 
+        app.UseCors("AllowAllDevFront");
 
         if (app.Environment.IsDevelopment())
         {

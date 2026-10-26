@@ -7,16 +7,18 @@ import { User } from '../models/user/User';
 export class AuthService {
   private http = inject(HttpClient);
 
-  private readonly authUrl = '/api/v1/identity';
+  private readonly authUrl = 'http://localhost:5000/api/v1/identity';
 
   public getCurrentUser(): Observable<User> {
     const user$ = this.http
       .get<User>(`${this.authUrl}/auth/current`, { withCredentials: true })
       .pipe(
-        map((user) => ({
-          ...user,
-          isAuthenticated: !!user.id,
-        })),
+        map((user) => {
+          return {
+            ...user,
+            isAuthenticated: !!user.id,
+          };
+        }),
       );
     return user$;
   }
