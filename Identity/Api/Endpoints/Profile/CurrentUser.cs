@@ -7,14 +7,19 @@ public sealed class CurrentUserEndpoint : IEndpoint
 {
     public void Register(IEndpointRouteBuilder endpointsBuilder)
     {
-        endpointsBuilder.MapGet("/profile/me", Handle).RequireAuthorization();
+        endpointsBuilder.MapGet("/profile/me", Handle)
+            .WithName("GetCurrentUserProfile")
+            .WithSummary("Получить профиль пользователя")
+            .WithDescription("Возвращает профиль текущего авторизованного пользователя.")
+            .Produces<UserDto>(StatusCodes.Status200OK)
+            .RequireAuthorization();
     }
 
     private static IResult Handle(HttpContext context)
     {
         var user = context.User;
         var id = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)!.Value;
-        var username = user.FindFirst("username")!.Value;
+        var username = user.FindFirst(System.Security.Claims.ClaimTypes.Name)!.Value;
         var email = user.FindFirst(System.Security.Claims.ClaimTypes.Email)!.Value;
         var role = user.FindFirst(System.Security.Claims.ClaimTypes.Role)!.Value;
         return Results.Ok(new UserDto(Guid.Parse(id), username, email));

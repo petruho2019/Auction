@@ -7,7 +7,11 @@ public sealed class CurrentAuth : IEndpoint
 {
     public void Register(IEndpointRouteBuilder endpointsBuilder)
     {
-        endpointsBuilder.MapGet("/auth/current", Handle);
+        endpointsBuilder.MapGet("/auth/current", Handle)
+            .WithName("GetCurrentAuth")
+            .WithSummary("Получить текущую авторизацию")
+            .WithDescription("Возвращает данные текущего пользователя, если он авторизован.")
+            .Produces<UserDto>(StatusCodes.Status200OK);
     }
 
     private static IResult Handle(HttpContext context)

@@ -2,13 +2,12 @@
 
 using Api.Common.Extensions;
 using Identity.Application;
-using Identity.Api.Auth;
 using Identity.DataAccess;
 using Microsoft.AspNetCore.Authentication;
-using Identity.Data.Entities;
-using DataAccess.Common;
+using Api.Auth;
+using RabbitMq.Common;
 
-namespace Identity.Api;
+namespace Api;
 
 public class Program
 {
@@ -19,18 +18,24 @@ public class Program
         var configuration = builder.Configuration;
         var services = builder.Services;
 
-        var connectionString = configuration.GetConnectionString("IdentityDatabase")
+        services.AddValidation();
+
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException(
-                "Connection string 'IdentityDatabase' is not configured.");
+                "Connection string 'DefaultConnection' is not configured.");
 
         services.AddOpenApi("auction", opts =>
         {
             opts.OpenApiVersion = Microsoft.OpenApi.OpenApiSpecVersion.OpenApi3_0;
-
         });
 
         services.AddDataAccess(connectionString);
         services.AddApplication();
+        services.AddRabbitMq(
+            configuration.GetSection("RabbitMq"),
+            "identity",
+            typeof(Program).Assembly,
+            typeof(Identity.Application.DependencyInjection).Assembly);
         services
             .AddAuthentication("AccessRefresh")
             .AddScheme<AuthenticationSchemeOptions, AccessRefreshAuthenticationHandler>(
@@ -71,9 +76,8 @@ public class Program
         using (var scope = app.Services.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            await DBInitializer.InitializeDatabase(context);
+            await context.Database.EnsureCreatedAsync();
         }
         app.Run();
     }
-
 }

@@ -22,3 +22,6 @@ export const register = createAction(
 export const registerSuccess = createAction('[User] Register Success');
 export const registerFailure = createAction('[User] Register Failure', props<{ error: string }>());
 export const clearAuthStatus = createAction('[User] Clear Authentication Status');
+export const logout = createAction('[User] Logout');
+export const logoutSuccess = createAction('[User] Logout Success');
+export const logoutFailure = createAction('[User] Logout Failure', props<{ error: string }>());

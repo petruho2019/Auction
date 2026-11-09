@@ -1,9 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AsyncPipe } from '@angular/common';
 import { clearAuthStatus, login, register } from '../../../store/actions/user.actions';
 import { selectAuthError, selectAuthStatus } from '../../../store/selectors/user.selector';
+import { Router } from '@angular/router';
+import { map, Subscription } from 'rxjs';
 
 @Component({
   imports: [AsyncPipe, ReactiveFormsModule],
@@ -11,13 +13,16 @@ import { selectAuthError, selectAuthStatus } from '../../../store/selectors/user
   styleUrl: './login.scss',
   templateUrl: './login.html',
 })
-export class Login {
+export class Login implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
   private readonly store = inject(Store);
+  private readonly router = inject(Router);
 
   protected readonly isRegistering = signal(false);
   protected readonly authStatus$ = this.store.select(selectAuthStatus);
   protected readonly authError$ = this.store.select(selectAuthError);
+  protected authStatusSub: Subscription = null!;
+
   protected readonly form = this.formBuilder.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
     username: [''],
@@ -26,6 +31,21 @@ export class Login {
 
   constructor() {
     this.updateUsernameValidators();
+  }
+  ngOnInit(): void {
+    this.authStatusSub = this.authStatus$
+      .pipe(map((state) => state.authStatus))
+      .subscribe((authStatus) => {
+        if (authStatus === 'authenticated') {
+          this.router.navigate(['/profile']);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.authStatusSub) {
+      this.authStatusSub.unsubscribe();
+    }
   }
 
   protected toggleMode(): void {

@@ -27,6 +27,8 @@
     </p>
 
     <form [formGroup]="form" (ngSubmit)="submit()">
+      @let authStatus = authStatus$ | async;
+
       <label for="email">Email</label>
       <input
         id="email"
@@ -70,18 +72,17 @@
       @if (authError$ | async; as authError) {
         <p class="form-error" role="alert">{{ authError }}</p>
       }
-      @if ((authStatus$ | async) === 'success') {
+      @if (authStatus!.authStatus === `registered`) {
         <p class="form-success" role="status">
-          {{
-            isRegistering()
-              ? 'Регистрация прошла успешно. Теперь можно войти в аккаунт.'
-              : 'Вход выполнен успешно.'
-          }}
+          'Регистрация прошла успешно. Теперь можно войти в аккаунт.'
         </p>
       }
+      @if (authStatus!.authStatus === `authenticated`) {
+        <p class="form-success" role="status">'Вход выполнен успешно.'</p>
+      }
 
-      <button class="submit-button" type="submit" [disabled]="(authStatus$ | async) === 'loading'">
-        @if ((authStatus$ | async) === 'loading') {
+      <button class="submit-button" type="submit" [disabled]="authStatus!.authStatus === 'loading'">
+        @if (authStatus!.authStatus === 'loading') {
           Подождите...
         } @else {
           {{ isRegistering() ? 'Зарегистрироваться' : 'Войти' }}

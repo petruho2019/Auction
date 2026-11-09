@@ -1,16 +1,16 @@
 using System.Security.Claims;
 using System.Text.Encodings.Web;
-using Identity.Application.Interfaces;
+using Identity.Data.Dtos;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Options;
 
-namespace Identity.Api.Auth;
+namespace Api.Auth;
 
 public sealed class AccessRefreshAuthenticationHandler(
     IOptionsMonitor<AuthenticationSchemeOptions> options,
     ILoggerFactory logger,
     UrlEncoder encoder,
-    Application.Interfaces.IAuthenticationService authenticationService)
+    Identity.Application.Interfaces.IAuthenticationService authenticationService)
     : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -33,7 +33,7 @@ public sealed class AccessRefreshAuthenticationHandler(
         return Success(result.User);
     }
 
-    private AuthenticateResult Success(Data.Dtos.UserDto user)
+    private AuthenticateResult Success(UserDto user)
     {
         var claims = new[]
         {

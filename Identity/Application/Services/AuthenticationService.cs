@@ -1,3 +1,4 @@
+using Data;
 using Data.Dtos;
 using Identity.Application.Interfaces;
 using Identity.Data;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace Identity.Application.Services;
+namespace Application.Services;
 
 public sealed class AuthenticationService(
     ApplicationDbContext dbContext,

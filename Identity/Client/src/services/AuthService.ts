@@ -38,4 +38,8 @@ export class AuthService {
       { withCredentials: true },
     );
   }
+
+  public logout(): Observable<void> {
+    return this.http.post<void>(`${this.authUrl}/auth/logout`, {}, { withCredentials: true });
+  }
 }

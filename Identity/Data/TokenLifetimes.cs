@@ -1,4 +1,4 @@
-namespace Identity.Data;
+namespace Data;
 
 public static class TokenLifetimes
 {

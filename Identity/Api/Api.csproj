@@ -3,10 +3,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
-    <ProjectReference Include="..\..\shared\Api.Common\Api.Common.csproj" />
-    <ProjectReference Include="..\..\shared\Api.Common.Data\Api.Common.Data.csproj" />
-    <ProjectReference Include="..\..\shared\Api.Common.Generator\Api.Common.Generator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <ProjectReference Include="..\..\shared\DataAccess.Common\DataAccess.Common.csproj" />
+    <ProjectReference Include="..\..\shared\Common\Api.Common\Api.Common.csproj" /> 
+    <ProjectReference Include="..\..\shared\Common\Api.Common\Api.Common.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="..\..\shared\Common\DataAccess.Common\DataAccess.Common.csproj" />
+    <ProjectReference Include="..\..\shared\Common\RabbitMq.Common\RabbitMq.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

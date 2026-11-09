@@ -1,1 +1,43 @@
-<p>user-profile works!</p>
+<main class="profile-page">
+  <section class="profile-card" aria-labelledby="profile-title">
+    <header class="profile-header">
+      <div>
+        <p class="eyebrow">Личный кабинет</p>
+        <h1 id="profile-title">Профиль</h1>
+      </div>
+      <button
+        class="logout-button"
+        type="button"
+        [disabled]="(authStatus$ | async)?.authStatus === 'loading'"
+        (click)="logout()"
+      >
+        @if ((authStatus$ | async)?.authStatus === 'loading') {
+          Выходим...
+        } @else {
+          Выйти
+        }
+      </button>
+    </header>
+
+    @if (authStatus$ | async; as authState) {
+      @if (authState.authError) {
+        <p class="profile-error" role="alert">{{ authState.authError }}</p>
+      }
+    }
+
+    @if (user$ | async; as user) {
+      <dl class="profile-details">
+        <div class="profile-field">
+          <dt>Имя пользователя</dt>
+          <dd>{{ user.username }}</dd>
+        </div>
+        <div class="profile-field">
+          <dt>Email</dt>
+          <dd>{{ user.email }}</dd>
+        </div>
+      </dl>
+    } @else {
+      <p class="profile-empty">Информация профиля недоступна.</p>
+    }
+  </section>
+</main>

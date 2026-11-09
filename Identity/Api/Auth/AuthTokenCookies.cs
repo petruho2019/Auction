@@ -1,6 +1,6 @@
-using Identity.Data;
+using Data;
 
-namespace Identity.Api.Auth;
+namespace Api.Auth;
 
 public static class AuthTokenCookies
 {

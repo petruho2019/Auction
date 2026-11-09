@@ -7,6 +7,9 @@ import {
   loadCurrentUser,
   loadCurrentUserFailure,
   loadCurrentUserSuccess,
+  logout,
+  logoutFailure,
+  logoutSuccess,
   register,
   registerFailure,
   registerSuccess,
@@ -65,6 +68,18 @@ export class UserEffects {
         this.authService.register(email, username, password).pipe(
           map(() => registerSuccess()),
           catchError((error: unknown) => of(registerFailure({ error: getAuthError(error) }))),
+        ),
+      ),
+    ),
+  );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(logout),
+      exhaustMap(() =>
+        this.authService.logout().pipe(
+          map(() => logoutSuccess()),
+          catchError((error: unknown) => of(logoutFailure({ error: getAuthError(error) }))),
         ),
       ),
     ),

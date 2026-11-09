@@ -1,5 +1,5 @@
+using Application.Services;
 using Identity.Application.Interfaces;
-using Identity.Application.Services;
 using Identity.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

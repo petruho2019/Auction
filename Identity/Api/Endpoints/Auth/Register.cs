@@ -1,5 +1,6 @@
 using Api.Common.Data.Interfaces;
 using Data.Dtos;
+using Identity.Data.Dtos;
 using Identity.Application.Interfaces;
 
 namespace Api.Endpoints.Auth;
@@ -8,7 +9,13 @@ public sealed class RegisterEndpoint : IEndpoint
 {
     public void Register(IEndpointRouteBuilder endpointsBuilder)
     {
-        endpointsBuilder.MapPost("auth/register", Handle);
+        endpointsBuilder.MapPost("auth/register", Handle)
+            .WithName("Register")
+            .WithSummary("Зарегистрировать аккаунт")
+            .WithDescription("Создает учетную запись после проверки адреса электронной почты, имени пользователя и пароля.")
+            .Produces<UserDto>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status409Conflict);
     }
 
     private static async Task<IResult> Handle(

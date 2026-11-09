@@ -1,6 +1,19 @@
 @AuctionApi_HostAddress = http://localhost:5077
 
-GET {{AuctionApi_HostAddress}}/weatherforecast/
-Accept: application/json
+### Создать аукцион без фото
+POST {{AuctionApi_HostAddress}}/api/v1/auctions
+Content-Type: multipart/form-data; boundary=AuctionBoundary
 
-###
+--AuctionBoundary
+Content-Disposition: form-data; name="ProductName"
+
+Винтажные часы
+--AuctionBoundary
+Content-Disposition: form-data; name="StartsAt"
+
+2026-11-01T10:00:00+03:00
+--AuctionBoundary
+Content-Disposition: form-data; name="EndsAt"
+
+2026-11-08T10:00:00+03:00
+--AuctionBoundary--
